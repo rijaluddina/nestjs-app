@@ -9,29 +9,16 @@
 
   bootstrap = ''
     set -e
-
-    echo "Creating NestJS app..."
-    npx @nestjs/cli new "$out" \
+    npx --yes @nestjs/cli new "$out" \
       --skip-git \
-      --package-manager ${packageManager} \
-      --skip-install
+      --package-manager ${packageManager}
 
-    mkdir -p "$out"/.idx
+    mkdir -p "$out/.idx"
     chmod -R u+w "$out"
 
-    # copy dev.nix if exists
-    if [ -f ${./.idx/dev.nix} ]; then
-      cp ${./.idx/dev.nix} "$out"/.idx/dev.nix
-    fi
+    cp ${./.idx/dev.nix} "$out/.idx/dev.nix"
 
     chmod -R +w "$out"
-
-    ${
-     if packageManager == "npm" then
-       "( cd $out && npm i --package-lock-only --ignore-scripts )"
-     else
-       ""
-    }
-    
   '';
 }
+
