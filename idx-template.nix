@@ -4,16 +4,11 @@
   ];
 
   bootstrap = ''
-  set -e
+    set -e
 
-  mkdir -p "$out"
-  rsync -av \
-    --exclude idx-template.nix \
-    --exclude idx-template.json \
-    ${./.}/ "$out/"
+    cp -R ${./.} "$out"
 
-  cd "$out"
-  npm install
-'';
-
+    cd "$out"/*
+    npm install
+  '';
 }
