@@ -20,8 +20,8 @@
     chmod -R u+w "$out"
 
     # copy dev.nix if exists
-    if [ -f ${./dev.nix} ]; then
-      cp ${./dev.nix} "$out"/.idx/dev.nix
+    if [ -f ${./.idx/dev.nix} ]; then
+      cp ${./.idx/dev.nix} "$out"/.idx/dev.nix
     fi
 
     chmod -R +w "$out"
