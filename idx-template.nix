@@ -6,9 +6,12 @@
   bootstrap = ''
     set -e
 
-    cp -R ${./.} "$out"
+    echo "Copy project files (flatten)..."
+    cp -R ${./.}/* "$out"
 
-    cd "$out"/*
+    cd "$out"
+
+    echo "Install dependencies..."
     npm install
   '';
 }
