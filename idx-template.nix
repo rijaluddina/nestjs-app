@@ -11,9 +11,16 @@
         	--package-manager ${packageManager} \
      		--language TypeScript
     		
-    		if [ -f "src/main.ts" ]; then
-      		  sed -i "s/await app.listen(3000);/await app.listen(process.env.PORT || 9002, '0.0.0.0');/" src/main.ts
-    		fi
+    		cat <<EOF > src/main.ts
+		import { NestFactory } from '@nestjs/core';
+		import { AppModule } from './app.module';
+
+		async function bootstrap() {
+		  const app = await NestFactory.create(AppModule);
+		  await app.listen(process.env.PORT ?? 9002, '0.0.0.0');
+		}
+		bootstrap();
+		EOF
     		
 		mkdir -p "$out"/.idx
 		
