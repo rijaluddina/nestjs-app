@@ -1,21 +1,25 @@
-# No user-configurable parameters
-{ pkgs, ... }: {
-  packages = [
-    pkgs.nodejs_20
-  ];
+{ pkgs, version ? "latest", packageManager ? "npm", ... }: {
+
+  packages = [ pkgs.nodejs_20 pkgs.yarn pkgs.nodePackages.pnpm pkgs.bun ];
 
   bootstrap = ''
-    set -e
+		mkdir "$out"
+		npx @nestjs/cli@${version} "$out" \
+			--yes \
+			--skip-install
 
-    cp -rf ${./.} "$out"
+		mkdir -p "$out"/.idx
+		chmod -R u+w "$out"
+		cp ${./.idx/dev.nix} "$out"/.idx/dev.nix
+		cp -rf ${./.idx/airules.md} "$out/.idx/airules.md"
+		cp -rf "$out/.idx/airules.md" "$out/GEMINI.md"
+		chmod -R +w "$out"
 
-    chmod -R +w "$out"
-
-    rm -rf \
-      "$out/.git" \
-      "$out/idx-template.nix" \
-      "$out/idx-template.json"
-
+		${
+         if packageManager == "npm" then
+           "( cd $out && npm i --package-lock-only --ignore-scripts )"
+         else
+           ""
+        }
   '';
 }
-

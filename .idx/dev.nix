@@ -6,6 +6,9 @@
   # Use https://search.nixos.org/packages to find packages
   packages = [
     pkgs.nodejs_20
+    pkgs.yarn
+    pkgs.nodePackages.pnpm
+    pkgs.bun
   ];
   # Sets environment variables in the workspace
   env = {};
@@ -22,7 +25,7 @@
         # web = {
         #   # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
         #   # and show it in IDX's web preview panel
-        #   command = ["npm" "run" "dev"];
+        #   command = ["npm" "run" "start:dev" "--" "--port" "$PORT" "--hostname" "0.0.0.0"];
         #   manager = "web";
         #   env = {
         #     # Environment variables to set for your server
@@ -36,7 +39,7 @@
       # Runs when a workspace is first created
       onCreate = {
         # Example: install JS dependencies from NPM
-        npm-install = "npm install";
+        npm-install = "npm ci --no-audit --prefer-offline --no-progress --timing";
         # Open editors for the following files by default, if they exist:
         default.openFiles = [ ".idx/dev.nix" "README.md" ];
       };
