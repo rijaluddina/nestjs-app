@@ -11,8 +11,11 @@
         	--package-manager ${packageManager} \
      		--language TypeScript
      		
-     		sed -i "s/await app.listen(3000);/await app.listen(process.env.PORT || 9002, '0.0.0.0');/" src/main.ts
      		
+     		if [ -f "src/main.ts" ]; then
+      		  sed -i "s/await app.listen(3000);/await app.listen(process.env.PORT || 9002, '0.0.0.0');/" src/main.ts
+    		fi
+    		
 		mkdir -p "$out"/.idx
 		
 		chmod -R u+w "$out"
