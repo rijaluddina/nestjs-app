@@ -4,7 +4,7 @@
 
   bootstrap = ''
 		mkdir "$out"
-		npx @nestjs/cli@${version} "$out" \
+		npx @nestjs/cli@${version} new "$out" \
 			--yes \
 			--skip-install
 
@@ -22,4 +22,4 @@
            ""
         }
   '';
-}
+}	
