@@ -11,17 +11,6 @@
         	--package-manager ${packageManager} \
      		--language TypeScript
     		
-    		cat <<EOF > src/main.ts
-		import { NestFactory } from '@nestjs/core';
-		import { AppModule } from './app.module';
-
-		async function bootstrap() {
-		  const app = await NestFactory.create(AppModule);
-		  await app.listen(process.env.PORT ?? 9002, '0.0.0.0');
-		}
-		bootstrap();
-		EOF
-    		
 		mkdir -p "$out"/.idx
 		
 		chmod -R u+w "$out"
@@ -31,16 +20,29 @@
 		chmod -R +w "$out"
 
 	${
-      if packageManager == "npm" then
+      	if packageManager == "npm" then
         "npm install --package-lock-only --ignore-scripts"
-      		else if packageManager == "pnpm" then
+      	else if packageManager == "pnpm" then
         "pnpm install --lockfile-only --ignore-scripts"
-      		else if packageManager == "yarn" then
+      	else if packageManager == "yarn" then
         "yarn install --mode update-lockfile --ignore-scripts"
       	else if packageManager == "bun" then
         "bun install --no-save"
-      		else
+      	else
         ""
     	}
+    	
+    	cat <<EOF > src/main.ts
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  await app.listen(process.env.PORT ?? 9002, '0.0.0.0');
+  
+}
+bootstrap();
+EOF
+
   '';
 }	
