@@ -7,16 +7,18 @@
 		cd "$out"
 		
 		npx @nestjs/cli@${version} new . \
-        	--skip-git \
         	--skip-install \
         	--package-manager ${packageManager} \
      		--language TypeScript
-
+     		
+     		sed -i "s/await app.listen(3000);/await app.listen(process.env.PORT || 9002, '0.0.0.0');/" src/main.ts
+     		
 		mkdir -p "$out"/.idx
 		
 		chmod -R u+w "$out"
 		cp ${./.idx/dev.nix} "$out"/.idx/dev.nix
 		cp -rf ${./.idx/airules.md} "$out/.idx/airules.md"
+		cp -rf "$out/.idx/"
 		cp -rf "$out/.idx/airules.md" "$out/GEMINI.md"
 		chmod -R +w "$out"
 
