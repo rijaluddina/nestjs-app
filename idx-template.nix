@@ -16,6 +16,7 @@
 		chmod -R u+w "$out"
 		cp ${./.idx/dev.nix} "$out"/.idx/dev.nix
 		cp -rf ${./.idx/airules.md} "$out/.idx/airules.md"
+		cp -rf ${./.idx/mcp.json} "$out/.idx/mcp.md"
 		cp -rf "$out/.idx/airules.md" "$out/GEMINI.md"
 		chmod -R +w "$out"
 
@@ -45,4 +46,5 @@ bootstrap();
 EOF
 
   '';
-}	
+}
+
