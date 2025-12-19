@@ -1,11 +1,6 @@
 {
   "name": "Nest.js",
   "description": "A progressive Node.js framework for building efficient, reliable and scalable server-side applications.",
-  "categories": [
-    "Backend",
-    "Node.js",
-    "Typescript"
-  ],
   "icon": "https://nestjs.com/img/logo-small.svg",
 }
 
